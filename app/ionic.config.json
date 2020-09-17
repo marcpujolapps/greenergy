@@ -1,0 +1,8 @@
+{
+  "name": "lucera-solar",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

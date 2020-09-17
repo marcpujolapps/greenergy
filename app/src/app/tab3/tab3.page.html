@@ -1,0 +1,85 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Autoconsumo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Autoconsumo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header style="padding-bottom:0px">
+      <ion-card-subtitle>Mi instalación fotovoltaica</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-item style="margin-left:-20px">
+              <ion-label position="floating">Núm. de placas</ion-label>
+              <ion-input [(ngModel)]="num_placas" type="number" (change)="updateCharts()"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label position="floating">Watt por placa</ion-label>
+              <ion-input [(ngModel)]="w_placa" type="number" (change)="updateCharts()"></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" fill="outline">
+        <ion-icon slot="start" name="sunny-outline"></ion-icon>¿Cuántas placas necesito?
+      </ion-button>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{consumption.from | date:'MMM yyyy'}} - {{consumption.to | date:'MMM yyyy'}}
+      </ion-card-subtitle>
+      <ion-card-title>Anual</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <!-- <ion-text><h2>54% autoabastecimiento</h2></ion-text>
+      <ion-text><h2>3 meses con total abastecimiento</h2></ion-text> -->
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <ion-text color="success" style="font-weight:bold;text-align:center">
+              <ion-icon name="bulb"></ion-icon> {{consumption.summary.consumption | number:'0.0-0'}} kWh
+            </ion-text>
+          </ion-col>
+          <ion-col>
+            <ion-text style="color:aqua;font-weight:bold;text-align:center">
+              <ion-icon name="sunny"></ion-icon> {{generation.outputs.totals.fixed.E_y * ((num_placas * w_placa)/1000) | number:'0.0-0'}} kWh
+            </ion-text>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <canvas #yearChart></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{consumption_day.day | date}}</ion-card-subtitle>
+      <ion-card-title>Diario</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <canvas #dayChart></canvas>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

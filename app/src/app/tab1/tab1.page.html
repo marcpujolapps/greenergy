@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Consumo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Consumo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>{{consumption.from | date:'MMM yyyy'}} - {{consumption.to | date:'MMM yyyy'}}</ion-card-subtitle>
+      <ion-card-title>Resumen</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-text>Consumo medio: <b>{{consumption.summary.average_consumption}} kWh</b></ion-text><br><br>
+
+      <ion-text>Consumo total: <b>{{consumption.summary.consumption}} kWh</b></ion-text><br>
+      <ion-text *ngFor="let period of consumption.periods">{{period.period.price_type_name}}: <b>{{period.period.consumption}} kWh</b><br></ion-text>
+
+      <canvas #anuallyChart></canvas>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-slides pager="true">
+    <ion-slide *ngFor="let month of months">
+      <div style="text-align:left;width:100vw">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{month.friendly_month_name}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            <ion-text>Punta: <b>{{month.value.consum}} kWh</b></ion-text><br>
+            <ion-text>Valle: <b>{{month.value | json}} kWh</b></ion-text>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ion-slide>
+  </ion-slides>
+
+</ion-content>
